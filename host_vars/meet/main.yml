@@ -1,0 +1,48 @@
+---
+## Note
+# Do not use chars other than [a-zA-Z0-9._-] for usernames
+# prosody likes to encode chars other than alphanumerics in files/dirs names
+
+# Meet
+# Limit the number of videostreams to clients (-1 -> no limit)
+channelLastN: -1
+defaultLanguage: en
+
+# Jicofo
+jicofo_user: focus  # DO NOT change this, ignored by jicofo postinst, hardcoded god knows where else
+jicofo_pass: "{{ vault_jicofo_pass }}"
+# Jicofo Component secret (debconf: jicofo/jicofosecret
+jicofo_secret: "{{ vault_jicofo_secret }}"
+
+##
+## Optional components
+##
+
+## prometheus jvb exporter (installs docker and runs a container for it)
+run_exporter_container: false
+exporter_xmpp_user: prometheus
+exporter_xmpp_pass: "{{ vault_exporter_xmpp_pass }}"
+
+## Videobridge XMPP credetials (if running jvb in this host)
+videobridge_user: meet
+videobridge_pass: "{{ vault_videobridge_pass }}"
+# Set this to something different that "videobridge_user" if you want to share
+# videobridge_user and videobridge_pass across different videobridges
+videobridge_muc_nick: meet
+## octo configuration (optional)
+# octo_region: some_region
+## bind_address is only required if not using the IP address asociated
+## with the default route (as in "the default IP address")
+# octo_bind_address:
+## public_address is only required if the bind IP address is not reachable
+## by the rest of the videobridges. Usually when bind_address is in a private
+## network and there's some kind of NAT from this IP address to the bind_address
+# octo_public_address:
+
+## Jibri XMPP credetials (if running jibri in this host)
+jibri_user: jibri_CHANGEME
+jibri_pass: "{{ vault_jibri_pass }}"
+# Set this to something different that "videobridge_user" if you want to share
+# videobridge_user and videobridge_pass across different videobridges
+jibri_muc_nick: jibri_CHANGEME
+

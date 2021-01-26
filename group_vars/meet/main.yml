@@ -1,0 +1,50 @@
+---
+## Domain name for the installation
+meet_domain: meet.selfstream.live
+
+# Mail for let's encrypt certs
+le_email: domain@selfstream.live
+# Use debian's certbot
+debian_certbot: true
+# Auth (none, ldap, token)
+xmpp_auth: token
+# Allow guest users (when using auth)
+allow_guests: false
+
+# token configuration
+token_auth_appid: selfstreamlive
+token_auth_appsecret: "{{ vault_token_auth_appsecret }}"
+
+## LDAP configuration for saslauthd
+saslauthd_ldap_config: |
+  ldap_servers: ldap://127.0.0.1/
+  ldap_search_base: ou=PEOPLE,dc=YOURDOMAIN,dc=ES
+  ldap_filter: (uid=%u)
+  ldap_version: 3
+  ldap_auth_method: bind
+
+## This shouldn't be necessary,...
+## but sometimes download.jitsi.org is not fast enough for apt_key
+use_included_jitsi_gpg_key: false
+
+## Recording
+enable_recording: false
+add_participants_metadata: false
+recording_directory: /home/jibri/recs
+# Script to execute after recording is finished
+recording_processing_script: /dev/null
+
+## octo support
+octo_enabled: false
+# strategy: either RegionBasedBridgeSelectionStrategy or SplitBridgeSelectionStrategy
+octo_strategy: RegionBasedBridgeSelectionStrategy
+# default port for octo networking
+octo_bind_port: 4096
+# default region for those videobridges not having one set
+octo_region: none
+
+## turn support
+## TODO: Currently TURN server support is limited to running it only on the "central" server
+##       next to nginx, prosody and jicofo, and sharing SSL certificate with them
+turn_enabled: false
+turn_secret: "{{ vault_turn_secret }}"
