@@ -1,11 +1,11 @@
 ## central: jitsi-meet, prosody, jicofo
 ## ONLY one host should be in this group
 [central]
-meet.selfstream.live
+meuevento-hosts.selfstream.live
 
 ## videbridge: jitsi-videobridge2
 [videobridges]
-meet
+meuevento-hosts
 jvb.selfstream.live
 
 [jibris]

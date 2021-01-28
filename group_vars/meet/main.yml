@@ -1,6 +1,6 @@
 ---
 ## Domain name for the installation
-meet_domain: meet.selfstream.live
+meet_domain: meuevento-hosts.selfstream.live
 
 # Mail for let's encrypt certs
 le_email: domain@selfstream.live
