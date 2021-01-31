@@ -1,6 +1,7 @@
 ---
 - name: Main server configuration
   hosts: central
+  connection: local
   user: root
   roles:
   - { role: jitsi-meet, tags: [ 'meet' ] }
@@ -9,12 +10,14 @@
 
 - name: Videobridge configuration
   hosts: videobridges
+  connection: local
   user: root
   roles:
   - { role: videobridge, tags: [ 'videobridge' ] }
 
 - name: Jibri configuration
   hosts: jibris
+  connection: local
   user: root
   roles:
   - { role: jibri, tags: [ 'jibri' ] }
