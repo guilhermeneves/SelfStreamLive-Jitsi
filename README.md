@@ -6,6 +6,14 @@ or Ubuntu, but it has not been tested there.
 
 Before using it you may want to read a bit about Jitsi Meet's arquitecture [here](https://docs.easyjitsi.com/docs/architecture) or [here](https://github.com/jitsi/jitsi-meet/blob/master/doc/scalable-installation.md) or [aquí (in Spanish)](https://blog.inittab.org/administracion-sistemas/instalar-un-servidor-de-videoconferencia-libre-jitsi-meet-i-la-teoria/)
 
+# TODO
+
+- [ ] Fix Ansible Variables not working
+- [ ] Receive Subdomain as Env-Var and change strings and sub-folder name in host_vars/event-name
+- [ ] Create a Custom Jitsi Server with a SelfStream Subdomain passing as parameter.
+- [ ] Pass token, RTMP url, Event-ID as Env Vars and Configure Jitsi to use it.
+- [ ] Jitsi Layout Custom (https://github.com/cketti/jitsi-hacks)
+
 ## How do I use it?
 
 Simple clone it and rename the host configuration directories in *hosts_vars/*
@@ -82,15 +90,17 @@ Updating Droplet
 
 ```
 $ apt-get update
-$ apt-get install sudo
-$ sudo apt-get upgrade
-$ sudo apt install git
+$ apt-get -y install sudo
+$ sudo apt-get -y upgrade
+$ sudo apt-get -y install gnupg
+$ sudo apt-get -y install git
 
 ```
 
 Cloning Private SelfStream Jitsi Repo
 
 ```
+$ cd ..
 $ git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git
 
 ```
@@ -98,9 +108,24 @@ $ git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilherm
 Installing Ansible
 
 ```
+$ sed -i '$d' /etc/apt/sources.list
 $ echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list
 $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-$ sudo apt update
-$ sudo apt install ansible
+$ sudo apt-get update
+$ sudo apt-get -y install ansible
+
+```
+
+User-data Param to create a Droplet
+
+```
+  "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n -cd ~\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '$d' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible"
+
+```
+
+Checking Logs for User-Data
+
+```
+cat /var/log/cloud-init-output.log
 
 ```
