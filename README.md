@@ -19,6 +19,7 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] Jitsi Layout Custom option to show 2 people when more in a meeting (https://github.com/cketti/jitsi-hacks)
 - [ ] Jitsi Layout Custom option to add name as a label in the bottom (https://github.com/cketti/jitsi-hacks)
 - [ ] Jitsi Layout Custom option to add a imagem in the video (https://github.com/cketti/jitsi-hacks)
+- [ ] API to Monitoring Jitsi Meeting Usage.
 
 ## How do I use it?
 
