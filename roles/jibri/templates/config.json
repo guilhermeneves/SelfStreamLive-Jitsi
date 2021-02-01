@@ -17,7 +17,7 @@
 {% if inventory_hostname == groups['central'][0] %}
                 "localhost"
 {% else %}
-                "{{ hostvars[groups['central'][0]]['ansible_default_ipv4']['address'] }}"
+                "{{ myIpAddress }}"
 {% endif %}
             ],
             // The xmpp domain we'll connect to on the XMPP server
