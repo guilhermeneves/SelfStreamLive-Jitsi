@@ -8,11 +8,17 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 
 # TODO
 
-- [ ] Fix Ansible Variables not working
+- [X] Fix Ansible Variables not working.
+- [ ] Check snd_aloop module not found.
+- [ ] Receive Token as Env-Var and create a meeting with this password.
+- [ ] Remove the screen to create meeting and when exit does not go there.
 - [ ] Receive Subdomain as Env-Var and change strings and sub-folder name in host_vars/event-name
+- [ ] Create an env-var with ip-address and change ansible-playbook command
 - [ ] Create a Custom Jitsi Server with a SelfStream Subdomain passing as parameter.
 - [ ] Pass token, RTMP url, Event-ID as Env Vars and Configure Jitsi to use it.
-- [ ] Jitsi Layout Custom (https://github.com/cketti/jitsi-hacks)
+- [ ] Jitsi Layout Custom option to show 2 people when more in a meeting (https://github.com/cketti/jitsi-hacks)
+- [ ] Jitsi Layout Custom option to add name as a label in the bottom (https://github.com/cketti/jitsi-hacks)
+- [ ] Jitsi Layout Custom option to add a imagem in the video (https://github.com/cketti/jitsi-hacks)
 
 ## How do I use it?
 
@@ -33,9 +39,9 @@ point to your "central" server since a Let's Encrypt certificate will be
 generated during the installation.
 
 Once you've gone through the hosts/variables you may run the playbook with:
-
-    ansible-playbook -i hosts site.yml
-
+```
+    ansible-playbook -i hosts site.yml -e "channelLastN=-1 defaultLanguage=en jicofo_user=focus jicofo_pass=selfstreamlive jicofo_secret=selfstreamlive run_exporter_container=false exporter_xmpp_user=prometheus exporter_xmpp_pass=selfstreamlive videobridge_user=meet videobridge_pass=selfstreamlive videobridge_muc_nick=meet jibri_user=jibri jibri_pass=selfstreamlive jibri_muc_nick=jibri myIpAddress=68.183.139.133"
+```
 If your hosts are behind NAT or a firewall, remember to check the ports
 required to run Jitsi Meet (80,443 TCP and 1000 UDP at least).
 
