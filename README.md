@@ -9,7 +9,7 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 # TODO
 
 - [X] Fix Ansible Variables not working.
-- [ ] Check snd_aloop module not found.
+- [ ] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
 - [ ] Receive Token as Env-Var and create a meeting with this password.
 - [ ] Remove the screen to create meeting and when exit does not go there.
 - [ ] Receive Subdomain as Env-Var and change strings and sub-folder name in host_vars/event-name
@@ -20,6 +20,19 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] Jitsi Layout Custom option to add name as a label in the bottom (https://github.com/cketti/jitsi-hacks)
 - [ ] Jitsi Layout Custom option to add a imagem in the video (https://github.com/cketti/jitsi-hacks)
 - [ ] API to Monitoring Jitsi Meeting Usage.
+- [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
+
+
+videobridge Error:
+TASK [videobridge : Install Videobridge] ***************************************
+fatal: [jvb.selfstream.live]: FAILED! => {"cache_update_time": 1612398261, "cache_updated": false, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'jitsi-videobridge2'' failed: E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "rc": 100, "stderr": "E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "stderr_lines": ["E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)", "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?"], "stdout": "", "stdout_lines": []}
+
+
+Jibri Error
+TASK [jibri : Load snd-aloop or fail because of an invalid kernel] *************
+fatal: [jibri.selfstream.live]: FAILED! => {"changed": false, "cmd": ["modprobe", "snd-aloop"], "delta": "0:00:00.018568", "end": "2021-02-04 00:28:40.881485", "msg": "non-zero return code", "rc": 1, "start": "2021-02-04 00:28:40.862917", "stderr": "modprobe: FATAL: Module snd-aloop not found in directory /lib/modules/4.19.0-10-cloud-amd64", "stderr_lines": ["modprobe: FATAL: Module snd-aloop not found in directory /lib/modules/4.19.0-10-cloud-amd64"], "stdout": "", "stdout_lines": []}
+
+
 
 ## How do I use it?
 
@@ -126,7 +139,7 @@ $ sudo apt-get -y install ansible
 User-data Param to create a Droplet
 
 ```
-  "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n -cd ~\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '$d' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible"
+   "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n - cd /root\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '$d' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible\n - sudo apt-get -y install curl\n - export ipaddress=$(ip a s eth0 | awk '/inet / {print$2}' | head -1 | sed -r 's/.{3}$//')\n - 'curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header \"Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5\" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data ''{\"type\": \"A\",\"name\": \"meuevento-hosts\",\"data\": \"''\"${ipaddress}\"''\",\"priority\": null,\"port\": null,\"ttl\": 30, \"weight\": null, \"flags\": null,\"tag\": null}'''\n - sleep 30s\n - cd SelfStreamLive-Jitsi\n - ansible-playbook -i hosts site.yml -e \"channelLastN=-1 defaultLanguage=en jicofo_user=focus jicofo_pass=selfstreamlive jicofo_secret=selfstreamlive run_exporter_container=false exporter_xmpp_user=prometheus exporter_xmpp_pass=selfstreamlive videobridge_user=meet videobridge_pass=selfstreamlive videobridge_muc_nick=meet jibri_user=jibri jibri_pass=selfstreamlive jibri_muc_nick=jibri myIpAddress=${ipaddress}\" "
 
 ```
 
@@ -136,3 +149,23 @@ Checking Logs for User-Data
 cat /var/log/cloud-init-output.log
 
 ```
+
+Validate Cloud-Init Template
+
+```
+
+cloud-init devel schema --config-file test.yaml
+
+```
+
+YAML Template Example
+
+```
+
+#cloud-config
+runcmd:
+- 'curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header "Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data "{\"type\": \"A\","name": "meuevento-hosts","data": "10.0.0.0","priority": null,"port": null,"ttl": 30, "weight": null, "flags": null,"tag": null}"'
+
+
+```
+
