@@ -1,4 +1,9 @@
 ---
+- name: Install standard Linux kernel
+  include_role:
+    name: kernel
+    tasks_from: linux-standard
+
 - name: Install Java
   include_role:
     name: common
