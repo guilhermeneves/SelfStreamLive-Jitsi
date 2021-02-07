@@ -9,16 +9,17 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 # TODO
 
 - [X] Fix Ansible Variables not working.
-- [ ] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
-- [ ] Receive Token as Env-Var and create a meeting with this password.
+- [X] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
+- [ ] Receive ID Customer as Env-Var and create a Jitsi with this password as token.
 - [ ] Remove the screen to create meeting and when exit does not go there.
 - [ ] Receive Subdomain as Env-Var and change strings and sub-folder name in host_vars/event-name
-- [ ] Create an env-var with ip-address and change ansible-playbook command
+- [X] Create an env-var with ip-address and change ansible-playbook command
 - [ ] Create a Custom Jitsi Server with a SelfStream Subdomain passing as parameter.
 - [ ] Pass token, RTMP url, Event-ID as Env Vars and Configure Jitsi to use it.
 - [ ] Jitsi Layout Custom option to show 2 people when more in a meeting (https://github.com/cketti/jitsi-hacks)
 - [ ] Jitsi Layout Custom option to add name as a label in the bottom (https://github.com/cketti/jitsi-hacks)
 - [ ] Jitsi Layout Custom option to add a imagem in the video (https://github.com/cketti/jitsi-hacks)
+- [ ] Remove: Meeting in compact format and Invite People button from menu 
 - [ ] API to Monitoring Jitsi Meeting Usage.
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 
