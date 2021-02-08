@@ -15,7 +15,7 @@ payload = {
   "sub": "domingo-milagres-host.selfstream.live",
   "room": "*",
   "exp": 1639267200,
-  "moderator": True
+  "moderator": False
 }
 secret = "ID-EVENTO-123456789domingo-milagres-host"
 s = jwt.encode(payload, secret, algorithm="HS256")
