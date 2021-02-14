@@ -12,11 +12,11 @@ payload = {
   },
   "aud": "jitsi",
   "iss": "selfstreamlive",
-  "sub": "domingo-milagres-host.selfstream.live",
+  "sub": "test.selfstream.live",
   "room": "*",
   "exp": 1639267200,
   "moderator": False
 }
-secret = "ID-EVENTO-123456789domingo-milagres-host"
+secret = "ID-EVENTO-123456789test"
 s = jwt.encode(payload, secret, algorithm="HS256")
 print("token: ", s)
