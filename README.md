@@ -8,6 +8,7 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 
 # TODO
 
+- [] Create a Custom Deb package for SelfStream.live
 - [X] Fix Ansible Variables not working.
 - [X] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
 - [X] Receive EventId as Env-Var and create a Jitsi-Server with this password as token.
@@ -25,18 +26,16 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] Remove: Meeting in compact format and Invite People button from menu 
 - [ ] API to Monitoring Jitsi Meeting Usage.
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
-
-
-videobridge Error:
-TASK [videobridge : Install Videobridge] ***************************************
-fatal: [jvb.selfstream.live]: FAILED! => {"cache_update_time": 1612398261, "cache_updated": false, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'jitsi-videobridge2'' failed: E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "rc": 100, "stderr": "E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "stderr_lines": ["E: Could not get lock /var/lib/dpkg/lock-frontend - open (11: Resource temporarily unavailable)", "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?"], "stdout": "", "stdout_lines": []}
-
-
-Jibri Error
-TASK [jibri : Load snd-aloop or fail because of an invalid kernel] *************
-fatal: [jibri.selfstream.live]: FAILED! => {"changed": false, "cmd": ["modprobe", "snd-aloop"], "delta": "0:00:00.018568", "end": "2021-02-04 00:28:40.881485", "msg": "non-zero return code", "rc": 1, "start": "2021-02-04 00:28:40.862917", "stderr": "modprobe: FATAL: Module snd-aloop not found in directory /lib/modules/4.19.0-10-cloud-amd64", "stderr_lines": ["modprobe: FATAL: Module snd-aloop not found in directory /lib/modules/4.19.0-10-cloud-amd64"], "stdout": "", "stdout_lines": []}
-
-
+- [ ] Configure DigitalOcean Firewall 
+    ``` 
+    sudo ufw allow 80/tcp
+    sudo ufw allow 443/tcp
+    sudo ufw allow 10000/udp
+    sudo ufw allow 22/tcp
+    sudo ufw allow 3478/udp
+    sudo ufw allow 5349/tcp
+    sudo ufw enable
+    ```
 
 ## How do I use it?
 
@@ -173,3 +172,19 @@ runcmd:
 
 ```
 
+Copy Files from Jitsi-Serve
+
+```
+scp -r ~/.ssh/id_rsa root@142.93.242.93:/usr/share/jitsi-meet/images  /c/Development/Personal/LiveStream-Server/Implementation/SelfStreamLive-Jitsi/images
+
+```
+
+Restarting the Server
+
+```
+
+systemctl restart prosody
+systemctl restart jicofo
+systemctl restart jitsi-videobridge2
+
+```
