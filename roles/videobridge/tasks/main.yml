@@ -30,6 +30,10 @@
 # tune systemd
 - include: systemd_tuning.yml
 
+- name: Removing APT Locks
+  shell:
+    cmd: sudo rm -rf /var/lib/apt/lists/lock
+
 - name: Install Videobridge
   apt:
     pkg: "{{ packages }}"
