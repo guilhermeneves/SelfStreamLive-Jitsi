@@ -188,3 +188,70 @@ systemctl restart jicofo
 systemctl restart jitsi-videobridge2
 
 ```
+
+## Building Jitsi from the Source
+
+First Option: https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-web
+Second Option: https://community.jitsi.org/t/how-to-how-to-build-jitsi-meet-from-source-a-developers-guide/75422/22
+
+1)
+```
+sudo apt-get install curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install nodejs
+
+Command:
+
+node -v && npm -v
+✓ Result Looks Good:
+
+v12.18.3
+6.14.6
+
+```
+
+
+2)
+
+```
+cd ~
+git clone https://github.com/jitsi/jitsi-meet.git
+cd ~/jitsi-meet/
+npm update && npm install
+```
+Do not run these as the root user. Run all commands from a normal user.
+
+3) 
+
+```
+cd ~
+git clone https://github.com/jitsi/lib-jitsi-meet.git
+```
+
+```
+Edit the package file: vi ~/jitsi-meet/package.json.
+Search for and change: "lib-jitsi-meet": "github:jitsi/lib-jitsi-meet" → "lib-jitsi-meet": "file:../lib-jitsi-meet" (Yes, file:../ is correct.)
+Next:
+cd ~/lib-jitsi-meet
+npm update
+
+```
+
+4) 
+
+```
+cd ~/jitsi-meet/
+npm install lib-jitsi-meet --force && make
+
+```
+
+2)
+```
+dpkg-buildpackage -A -rfakeroot -us -uc -tc
+
+```
+
+
+## Building Jitsi using Docker Container
+
+https://alexclaydon.dev/post/2020-10-05-jitsi-meet-deployment
