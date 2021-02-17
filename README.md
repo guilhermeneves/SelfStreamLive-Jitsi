@@ -27,6 +27,7 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] API to Monitoring Jitsi Meeting Usage.
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 - [ ] Configure DigitalOcean Firewall 
+- [ ] Create APT repository and change ansible to read from there (edit digital ocean api user-data) https://www.percona.com/blog/2020/01/02/how-to-create-your-own-repositories-for-packages/ and digitalocean.com/community/tutorials/how-to-use-reprepro-for-a-secure-package-repository-on-ubuntu-14-04
     ``` 
     sudo ufw allow 80/tcp
     sudo ufw allow 443/tcp
