@@ -140,11 +140,26 @@ $ sudo apt-get -y install ansible
 
 ```
 
-User-data Param to create a Droplet
+Digital Ocean Post to create a Droplet
 
 ```
-   "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n - cd /root\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '$d' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible\n - sudo apt-get -y install curl\n - export ipaddress=$(ip a s eth0 | awk '/inet / {print$2}' | head -1 | sed -r 's/.{3}$//')\n - 'curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header \"Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5\" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data ''{\"type\": \"A\",\"name\": \"meuevento-hosts\",\"data\": \"''\"${ipaddress}\"''\",\"priority\": null,\"port\": null,\"ttl\": 30, \"weight\": null, \"flags\": null,\"tag\": null}'''\n - sleep 30s\n - cd SelfStreamLive-Jitsi\n - ansible-playbook -i hosts site.yml -e \"channelLastN=-1 defaultLanguage=en jicofo_user=focus jicofo_pass=selfstreamlive jicofo_secret=selfstreamlive run_exporter_container=false exporter_xmpp_user=prometheus exporter_xmpp_pass=selfstreamlive videobridge_user=meet videobridge_pass=selfstreamlive videobridge_muc_nick=meet jibri_user=jibri jibri_pass=selfstreamlive jibri_muc_nick=jibri myIpAddress=${ipaddress}\" "
-
+   curl --request POST \
+  --url https://api.digitalocean.com/v2/droplets \
+  --header 'Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5' \
+  --header 'Content-Type: application/json' \
+  --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 \
+  --data '{
+  "name": "domingo-milagres-host.selfstream.live",
+  "region": "nyc1",
+  "size": "c-4",
+  "image": "debian-10-x64",
+  "ssh_keys": [
+    29297645
+  ],
+  "backups": false,
+  "ipv6": false,
+  "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n - cd /root\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '\''$d'\'' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible\n - sudo apt-get -y install curl\n - export ipaddress=$(ip a s eth0 | awk '\''/inet / {print$2}'\'' | head -1 | sed -r '\''s/.{3}$//'\'')\n - '\''curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header \"Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5\" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data '\'''\''{\"type\": \"A\",\"name\": \"domingo-milagres-host\",\"data\": \"'\'''\''\"${ipaddress}\"'\'''\''\",\"priority\": null,\"port\": null,\"ttl\": 30, \"weight\": null, \"flags\": null,\"tag\": null}'\'''\'''\''\n - sleep 30s\n - cd SelfStreamLive-Jitsi\n - chmod 777 cron-script.sh\n - chmod 777 new-cron-job.sh\n - ./new-cron-job.sh\n - sed -i '\''63,63 s/^##*//'\'' /etc/rsyslog.conf\n - apt-get -y install linux-image-amd64\n - echo \"eventId=\\\"ID-EVENTO-123456789\\\"\" >> /etc/environment\n - source /etc/environment\n - reboot"
+}'
 ```
 
 Checking Logs for User-Data

@@ -15,10 +15,10 @@
     - jitsirepo
   when: use_included_jitsi_gpg_key
 
-- name: Add Jitsi repository
-  apt_repository:
-    repo: deb https://download.jitsi.org stable/
-    state: present
-    filename: 'local-jitsi'
-  tags:
-    - jitsirepo
+# - name: Add Jitsi repository
+#   apt_repository:
+#     repo: deb https://download.jitsi.org stable/
+#     state: present
+#     filename: 'local-jitsi'
+#   tags:
+#     - jitsirepo
