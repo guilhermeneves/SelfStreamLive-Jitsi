@@ -30,9 +30,12 @@
 # tune systemd
 - include: systemd_tuning.yml
 
-- name: Removing APT Locks
-  shell:
-    cmd: sudo rm -rf /var/lib/apt/lists/lock
+- name: Wait for Other Jitsi APT Installs
+  become: true
+  shell: while sudo fuser /var/lib/dpkg/{{ item }} >/dev/null 2>&1; do sleep 1; done;
+  with_items:
+    - lock
+    - lock-frontend
 
 - name: Install Videobridge
   apt:

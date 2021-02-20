@@ -8,7 +8,7 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 
 # TODO
 
-- [] Create a Custom Deb package for SelfStream.live
+- [X] Create a Custom Deb package for SelfStream.live
 - [X] Fix Ansible Variables not working.
 - [X] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
 - [X] Receive EventId as Env-Var and create a Jitsi-Server with this password as token.
@@ -27,7 +27,8 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] API to Monitoring Jitsi Meeting Usage.
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 - [ ] Configure DigitalOcean Firewall 
-- [ ] Create APT repository and change ansible to read from there (edit digital ocean api user-data) https://www.percona.com/blog/2020/01/02/how-to-create-your-own-repositories-for-packages/ and digitalocean.com/community/tutorials/how-to-use-reprepro-for-a-secure-package-repository-on-ubuntu-14-04
+- [X] Create APT repository and change ansible to read from there.
+
     ``` 
     sudo ufw allow 80/tcp
     sudo ufw allow 443/tcp
