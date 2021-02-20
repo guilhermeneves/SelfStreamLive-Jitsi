@@ -12,24 +12,16 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [X] Fix Ansible Variables not working.
 - [X] Check snd_aloop module not found. (https://github.com/emrahcom/emrah-buster-templates/blob/master/doc/jitsi_cluster.md??) or (https://community.jitsi.org/t/best-easy-method-to-scale-jibri-2-4-recorders/64797/4)
 - [X] Receive EventId as Env-Var and create a Jitsi-Server with this password as token.
-- [ ] Remove the screen to create meeting and when exit does not go there.
+- [X] Remove the screen to create meeting and when exit does not go there.
 - [X] Receive Subdomain as Env-Var and change strings and sub-folder name in host_vars/event-name
 - [X] Create an env-var with ip-address and change ansible-playbook command
 - [X] Create a Custom Jitsi Server with a SelfStream Subdomain passing as parameter.
-- [ ] Remove Jitsi watermark
+- [X] Remove Jitsi watermark
 - [X] Test WebStream from Jitsi
-- [ ] Limit the Meeting to 4 participants
-- [ ] Change bitrate from 645kb to 1.5mbs
-- [ ] Jitsi Layout Custom option to show 2 people when more in a meeting (https://github.com/cketti/jitsi-hacks)
-- [ ] Jitsi Layout Custom option to add name as a label in the bottom (https://github.com/cketti/jitsi-hacks)
-- [ ] Jitsi Layout Custom option to add a imagem in the video (https://github.com/cketti/jitsi-hacks)
-- [ ] Remove: Meeting in compact format and Invite People button from menu 
-- [ ] API to Monitoring Jitsi Meeting Usage.
+- [ ] API to Monitoring Jitsi Meeting Usage set env var to number of hours and auto-destroy when reach.
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 - [ ] Configure DigitalOcean Firewall 
 - [X] Create APT repository and change ansible to read from there.
-- [ ] Change page when close meeting https://domingo-milagres-host.selfstream.live/static/close2.html
-- [ ] Change Index Page Title from 'Jitsi Meet' to 'SelfStream'
 
     ``` 
     sudo ufw allow 80/tcp
