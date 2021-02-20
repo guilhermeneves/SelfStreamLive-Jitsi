@@ -28,6 +28,8 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [ ] Configure Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 - [ ] Configure DigitalOcean Firewall 
 - [X] Create APT repository and change ansible to read from there.
+- [ ] Change page when close meeting https://domingo-milagres-host.selfstream.live/static/close2.html
+- [ ] Change Index Page Title from 'Jitsi Meet' to 'SelfStream'
 
     ``` 
     sudo ufw allow 80/tcp

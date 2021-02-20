@@ -30,13 +30,6 @@
 # tune systemd
 - include: systemd_tuning.yml
 
-- name: Wait for Other Jitsi APT Installs
-  become: true
-  shell: while sudo fuser /var/lib/dpkg/{{ item }} >/dev/null 2>&1; do sleep 1; done;
-  with_items:
-    - lock
-    - lock-frontend
-
 - name: Install Videobridge
   apt:
     pkg: "{{ packages }}"
@@ -44,6 +37,9 @@
   vars:
     packages:
       - jitsi-videobridge2
+  register: apt_action
+  retries: 100
+  until: apt_action is success or ('Failed to lock apt for exclusive operation' not in apt_action.msg and '/var/lib/dpkg/lock' not in apt_action.msg)
 
 - name: Configure videobridge I
   template:
