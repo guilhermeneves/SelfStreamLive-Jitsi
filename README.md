@@ -168,7 +168,7 @@ Validate Cloud-Init Template
 
 ```
 
-cloud-init devel schema --config-file test.yaml
+cloud-init devel schema --config-file cloud.yaml
 
 ```
 

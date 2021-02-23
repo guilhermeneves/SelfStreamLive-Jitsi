@@ -1,11 +1,8 @@
 #!/bin/bash
 
- # schedule cron-script to run ansible on reboot
  sudo crontab -l > newinit
- echo "@reboot . /etc/profile; /root/SelfStreamLive-Jitsi/cron-script.sh" >> newinit
- crontab newinit
- 
  # schedule cron-script to run ansible on reboot
- sudo crontab -l > newinitb
- echo "0 */${contracted_hours} * * *  /root/SelfStreamLive-Jitsi/auto-destroy-scheduler.sh" >> newinitb
- crontab newinitb
+ echo "@reboot . /etc/profile; /root/SelfStreamLive-Jitsi/cron-script.sh" >> newinit
+ # schedule cron-script to auto-destroy droplet
+ echo "0 */${contracted_hours} * * *  /root/SelfStreamLive-Jitsi/auto-destroy-scheduler.sh" >> newinit
+ crontab newinit
