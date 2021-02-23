@@ -138,7 +138,7 @@ $ sudo apt-get -y install ansible
 Digital Ocean Post to create a Droplet
 
 ```
-   curl --request POST \
+curl --request POST \
   --url https://api.digitalocean.com/v2/droplets \
   --header 'Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5' \
   --header 'Content-Type: application/json' \
@@ -153,8 +153,9 @@ Digital Ocean Post to create a Droplet
   ],
   "backups": false,
   "ipv6": false,
-  "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n - cd /root\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '\''$d'\'' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible\n - sudo apt-get -y install curl\n - export ipaddress=$(ip a s eth0 | awk '\''/inet / {print$2}'\'' | head -1 | sed -r '\''s/.{3}$//'\'')\n - '\''curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header \"Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5\" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data '\'''\''{\"type\": \"A\",\"name\": \"domingo-milagres-host\",\"data\": \"'\'''\''\"${ipaddress}\"'\'''\''\",\"priority\": null,\"port\": null,\"ttl\": 30, \"weight\": null, \"flags\": null,\"tag\": null}'\'''\'''\''\n - sleep 30s\n - cd SelfStreamLive-Jitsi\n - chmod 777 cron-script.sh\n - chmod 777 new-cron-job.sh\n - ./new-cron-job.sh\n - sed -i '\''63,63 s/^##*//'\'' /etc/rsyslog.conf\n - apt-get -y install linux-image-amd64\n - echo \"eventId=\\\"ID-EVENTO-123456789\\\"\" >> /etc/environment\n - source /etc/environment\n - reboot"
+  "user_data": " #cloud-config\nruncmd:\n - apt-get update\n - apt-get -y install sudo\n - sudo apt-get -y upgrade\n - sudo apt-get -y install git\n - sudo apt-get -y install gnupg\n - cd /root\n - git clone https://eb60ea0493dbc8963018d274eb6ef3856f69e774@github.com/guilhermeneves/SelfStreamLive-Jitsi.git\n - sed -i '\''$d'\'' /etc/apt/sources.list\n - echo \"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\" >> /etc/apt/sources.list\n - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367\n - sudo apt-get update\n - sudo apt-get -y install ansible\n - sudo apt-get -y install curl\n - export ipaddress=$(ip a s eth0 | awk '\''/inet / {print$2}'\'' | head -1 | sed -r '\''s/.{3}$//'\'')\n - '\''curl --request POST --url https://api.digitalocean.com/v2/domains/selfstream.live/records --header \"Authorization: Bearer 896ba0377c79ab6276fda8ffc423a66ded35480ab94be700fe2f53f05fb92db5\" --cookie __cfduid=dd32467e27572b22a4c897e4c2e94906a1611618721 --data '\'''\''{\"type\": \"A\",\"name\": \"domingo-milagres-host\",\"data\": \"'\'''\''\"${ipaddress}\"'\'''\''\",\"priority\": null,\"port\": null,\"ttl\": 30, \"weight\": null, \"flags\": null,\"tag\": null}'\'''\'''\''\n - sleep 30s\n - cd SelfStreamLive-Jitsi\n - chmod 777 cron-script.sh\n - chmod 777 new-cron-job.sh\n - ./new-cron-job.sh\n - sed -i '\''63,63 s/^##*//'\'' /etc/rsyslog.conf\n - apt-get -y install linux-image-amd64\n - echo \"eventId=\\\"ID-EVENTO-123456789\\\"\" >> /etc/environment\n - source /etc/environment\n - sudo apt-get -y install dpkg-dev\n - mkdir /opt/debs\n - cp /root/SelfStreamLive-Jitsi/jitsi-custom-deb-files/* /opt/debs\n - cd /opt/debs\n - dpkg-scanpackages . /dev/null > Release\n - dpkg-scanpackages . | gzip -c9  > Packages.gz\n - echo \"deb [trusted=yes] file:///opt/debs ./\" >> /etc/apt/sources.list\n - reboot"
 }'
+
 ```
 
 Checking Logs for User-Data
