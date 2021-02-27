@@ -20,6 +20,8 @@ Before using it you may want to read a bit about Jitsi Meet's arquitecture [here
 - [X] Test WebStream from Jitsi
 - [X] API to Monitoring Jitsi Meeting Usage set env var to number of hours and auto-destroy when reach.
 - [X] Create APT repository and change ansible to read from there.
+- [ ] Limit the Meeting to 4 participants (maybe not here)
+- [ ] Change bitrate from 645kb to 1.5mbs when live stream
 - [ ] Configure Automatically Droplet Alerts to CPU and Inbound and Outbound Net https://www.digitalocean.com/docs/monitoring/quickstart/
 - [ ] Configure DigitalOcean Firewall 
 - [ ] Evaluate certificates creation limits on LetsEncrypt ( Error creating new order :: too many certificates already issued for exact set of domains: domingo-milagres-host.selfstream.live: see https://letsencrypt.org/docs/rate-limits) - Not very important as the subdomain will change within the time.
